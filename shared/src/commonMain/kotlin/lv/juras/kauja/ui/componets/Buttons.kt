@@ -1,14 +1,19 @@
 package lv.juras.kauja.ui.componets
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +32,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import lv.juras.kauja.core.handlers.MenuHandler
+import lv.juras.kauja.core.handlers.Theme
 import lv.juras.kauja.ui.theme.darkButtonBackground
 import lv.juras.kauja.ui.theme.darkTextColor
 
@@ -41,11 +49,11 @@ fun TextButton(
 ) {
     Box(
         modifier = modifier
-            .height(80.dp)
-            .width(220.dp)
+            .fillMaxHeight(0.15f)
+            .fillMaxWidth(0.55f)
             .background(
                 color = backgroundColor,
-                shape = RoundedCornerShape(5.dp),
+                shape = RoundedCornerShape( 35.dp),
             )
             .padding(
                 horizontal = 10.dp,
@@ -65,40 +73,24 @@ fun TextButton(
 @Preview
 @Composable
 private fun TextButtonSandbox() {
-    var currentTheme by remember { mutableStateOf("lightTheme") }
-    var bgrColor =if (currentTheme == "lightTheme") buttonBackground else darkButtonBackground
-    var labelColor = if (currentTheme == "lightTheme") textColor else darkTextColor
+    val currentTheme by MenuHandler.theme.collectAsStateWithLifecycle()
+    val textLabelColor = if (currentTheme == Theme.Light) textColor else darkTextColor
+    val animatedBgColor by animateColorAsState(
+        targetValue = if (currentTheme == Theme.Light) buttonBackground else darkButtonBackground,
+        animationSpec = tween(durationMillis = 200)
+    )
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TextButton(
-            text = "Test1",
+            text = "Text Button",
             textSize = 35.sp,
-            backgroundColor = bgrColor,
-            textColor = labelColor,
+            backgroundColor = animatedBgColor,
+            textColor = textLabelColor,
             onClick = {
-                currentTheme = "DarkTheme"
-            }
-        )
-        TextButton(
-            text = "Test2",
-            textSize = 35.sp,
-            backgroundColor = bgrColor,
-            textColor = labelColor,
-            onClick = {
-                currentTheme = "DarkTheme"
-            }
-
-        )
-        TextButton(
-            text = "Test3",
-            textSize = 35.sp,
-            backgroundColor = bgrColor,
-            textColor = labelColor,
-            onClick = {
-                currentTheme = "DarkTheme"
+                MenuHandler.switchTheme()
             }
         )
     }

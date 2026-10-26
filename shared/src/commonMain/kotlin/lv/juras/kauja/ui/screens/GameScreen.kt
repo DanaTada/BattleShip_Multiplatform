@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 
 @Preview
 @Composable
-fun DrawGameScreen() {
+fun GameScreen() {
     Column(
 
         modifier = Modifier
