@@ -1,5 +1,17 @@
+# Kotlin
+.kotlin/
+
+# Gradle
 .gradle/
 build/
+**/build/
+
+# IDE
 .idea/
-local.properties
+*.iml
+
+# macOS
 .DS_Store
+
+# Local config (each dev creates their own)
+local.properties
