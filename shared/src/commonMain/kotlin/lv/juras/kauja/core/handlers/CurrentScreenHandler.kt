@@ -15,4 +15,5 @@ enum class Screen {
     Menu,
     GameScreen,
     Score,
+    Settings,
 }
