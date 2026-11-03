@@ -1,51 +1,53 @@
 package lv.juras.kauja
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import lv.juras.kauja.core.handlers.CurrentScreenHandler
+import lv.juras.kauja.core.handlers.Screen
+import lv.juras.kauja.ui.screens.GameScreen
 import lv.juras.kauja.ui.screens.MenuScreen
-import org.jetbrains.compose.resources.painterResource
-
-import seabattle.shared.generated.resources.Res
-import seabattle.shared.generated.resources.compose_multiplatform
+import lv.juras.kauja.ui.screens.ScoreScreen
+import lv.juras.kauja.ui.screens.SettingsScreen
+import lv.juras.kauja.ui.theme.balticBlue
+import lv.juras.kauja.ui.theme.darkTextColor
+import lv.juras.kauja.ui.theme.frostedMint
+import lv.juras.kauja.ui.theme.steelAzure
+import lv.juras.kauja.ui.theme.steelBlue
+import lv.juras.kauja.ui.theme.teal
 
 @Composable
-@Preview
 fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            /*Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
-            }*/
-            MenuScreen()
+    val screen by CurrentScreenHandler.currentScreen.collectAsStateWithLifecycle()
+    Column(
+        modifier = Modifier
+            .background(
+                Brush.verticalGradient(colors = listOf(teal,steelBlue,steelAzure))
+            )
+            .safeContentPadding()
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        when (screen) {
+            Screen.Menu -> MenuScreen()
+            Screen.GameScreen -> GameScreen()
+            Screen.Score -> ScoreScreen()
+            Screen.Settings -> SettingsScreen()
+            else -> error("No valid screen")
         }
     }
+}
+
+@Preview
+@Composable
+fun AppPreview(){
+    App()
 }
