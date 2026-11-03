@@ -17,9 +17,6 @@ import lv.juras.kauja.ui.screens.GameScreen
 import lv.juras.kauja.ui.screens.MenuScreen
 import lv.juras.kauja.ui.screens.ScoreScreen
 import lv.juras.kauja.ui.screens.SettingsScreen
-import lv.juras.kauja.ui.theme.balticBlue
-import lv.juras.kauja.ui.theme.darkTextColor
-import lv.juras.kauja.ui.theme.frostedMint
 import lv.juras.kauja.ui.theme.steelAzure
 import lv.juras.kauja.ui.theme.steelBlue
 import lv.juras.kauja.ui.theme.teal
@@ -30,7 +27,7 @@ fun App() {
     Column(
         modifier = Modifier
             .background(
-                Brush.verticalGradient(colors = listOf(teal,steelBlue,steelAzure))
+                Brush.verticalGradient(colors = listOf(teal, steelBlue, steelAzure))
             )
             .safeContentPadding()
             .fillMaxSize(),
@@ -48,6 +45,6 @@ fun App() {
 
 @Preview
 @Composable
-fun AppPreview(){
+fun AppPreview() {
     App()
 }

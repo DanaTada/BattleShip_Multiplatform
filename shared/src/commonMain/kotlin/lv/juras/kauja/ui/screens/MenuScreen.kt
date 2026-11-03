@@ -48,7 +48,7 @@ fun MenuScreen() {
     val animatedBgColor by animateColorAsState(
         targetValue = if (currentTheme == Theme.Light) buttonBackground else darkButtonBackground,
         animationSpec = tween(durationMillis = 200),
-        )
+    )
     Column(
         modifier = Modifier
             .widthIn(max = 450.dp)
